@@ -6,15 +6,17 @@ import { MainRoutingModule } from './main-routing.module';
 import { AuthService } from '../services/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
-
-@NgModule({
+import { LoginComponent } from '../auth/login/login.component';
+import { NgChartsModule } from 'ng2-charts';
+@NgModule({ 
   declarations: [DashboardComponent],
   imports: [
     CommonModule,
     FormsModule,
     MainRoutingModule,
     HttpClientModule,
-    EstudiantesModule
+    EstudiantesModule,
+    NgChartsModule
   ],
   providers: [AuthService]
 })

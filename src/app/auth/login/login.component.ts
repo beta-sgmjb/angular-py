@@ -9,10 +9,14 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  rol = '';
+  usuario = {};
 
   constructor(private authService: AuthService, private router: Router) {
+
+  }
+
+
+  ngOnInit(): void {
     if(this.authService.getToken()) {
       this.router.navigate(['sys/dashboard']).then(() => {
         window.location.reload();
@@ -20,17 +24,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
-
   login(form: any): void {
     this.authService.login(form.value).subscribe(res => {
       console.log(res);
+      
       this.router.navigate(['sys/dashboard']).then(() => {
         window.location.reload();
       });
     }, err => {
       console.log(err);
     });
+  }
+
+  getUsuario() {
+    return this.usuario;
   }
 }

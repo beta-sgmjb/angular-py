@@ -57,4 +57,8 @@ export class AuthService {
     }
     return this.token;
   }
+
+  getTokenD(token: string | any ): object {
+    return JSON.parse(atob(token.split('.')[1])).usuario
+  }
 }

@@ -24,8 +24,6 @@ export class OjoGuard implements CanActivate {
       if(this.auth.getToken()) {
         this.authV = true;
       }
-      console.log(this.auth.getToken());
-      
       this.redirect(this.authV);
       return this.authV;
   }
