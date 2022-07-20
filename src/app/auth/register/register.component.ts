@@ -16,9 +16,9 @@ export class RegisterComponent implements OnInit {
   }
 
   registrar(form: any): void {
+    form.value.rol = "estudiante";
     this.authService.register(form.value).subscribe(res => {
-      this.router.navigateByUrl('/auth/login');
+      this.router.navigateByUrl('/dashboard');
     })
   }
-
 }

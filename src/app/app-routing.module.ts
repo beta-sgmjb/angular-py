@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthModule } from './auth/auth.module';
-import { NotFoundComponent } from './default/not-found/not-found.component';
+import { OjoGuard } from './ojo.guard';
 
 const routes: Routes = [
-  { path:'', redirectTo:'/auth', pathMatch:'full' },
+  { path:'', redirectTo: 'sys', pathMatch:'full' },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  { path:'**', component: NotFoundComponent }
+  { path: 'sys', canActivate: [OjoGuard], loadChildren: () => import('./main/main.module').then(m => m.MainModule) },
+  { path:'**', redirectTo: 'sys' }
 ];
 
 @NgModule({

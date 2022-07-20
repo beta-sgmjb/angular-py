@@ -51,7 +51,7 @@ export class AuthService {
     this.token = token;
   }
 
-  private getToken(): string | null {
+  getToken(): string | null {
     if (!this.token) {
       this.token = localStorage.getItem("ACCESS_TOKEN");
     }

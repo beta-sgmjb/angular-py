@@ -1,21 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { NotFoundComponent } from './default/not-found/not-found.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { DashboardComponent } from './main/dashboard/dashboard.component';
+import { MainModule } from './main/main.module';
+import { AuthService } from './services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MainModule,
     AuthModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

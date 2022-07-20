@@ -12,7 +12,13 @@ export class LoginComponent implements OnInit {
 
   rol = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+    if(this.authService.getToken()) {
+      this.router.navigate(['sys/dashboard']).then(() => {
+        window.location.reload();
+      });
+    }
+  }
 
   ngOnInit(): void {
   }
@@ -20,8 +26,9 @@ export class LoginComponent implements OnInit {
   login(form: any): void {
     this.authService.login(form.value).subscribe(res => {
       console.log(res);
-      
-      this.router.navigateByUrl('/login'); //REDIRECCIONAR
+      this.router.navigate(['sys/dashboard']).then(() => {
+        window.location.reload();
+      });
     }, err => {
       console.log(err);
     });
