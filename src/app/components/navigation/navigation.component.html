@@ -8,37 +8,76 @@
         </button>
 
         <div class="navbar-collapse collapse" id="navbarsExample07">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" routerLink="">Estudiantes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Supervisores</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Empresas</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
-                        aria-expanded="false">Documentos</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown07">
-                        <li><a class="dropdown-item" href="#">Documentos</a></li>
-                        <li><a class="dropdown-item" href="#">Supervisiones</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
-                        aria-expanded="false">Usuario</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown07">
-                        <li><a class="dropdown-item" href="#">Perfil de usuario</a></li>
-                        <li><a class="dropdown-item" href="#">Estadísticas</a></li>
-                        <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar sesión</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <div *ngIf="rol === 'estudiante'">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="sys/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                            aria-expanded="false">Empresas</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown07">
+                            <li><a class="dropdown-item" routerLink="sys/empresas/listar">Empresas</a></li>
+                            <li><a class="dropdown-item" routerLink="sys/tipoEmpresas/listar">Tipo de empresas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                            aria-expanded="false">Documentos</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown07">
+                            <li><a class="dropdown-item" href="#">Documentos</a></li>
+                            <li><a class="dropdown-item" href="#">Supervisiones</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                            aria-expanded="false">Usuario</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown07">
+                            <li><a class="dropdown-item" href="#" routerLink="">Perfil de usuario</a></li>
+                            <li><a class="dropdown-item" href="#" routerLink="">Estadísticas</a></li>
+                            <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="rol === 'admin'">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="sys/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="sys/estudiantes/listar">Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="sys/supervisores/listar">Supervisores</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                            aria-expanded="false">Empresas</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown07">
+                            <li><a class="dropdown-item" routerLink="sys/empresas/listar">Empresas</a></li>
+                            <li><a class="dropdown-item" routerLink="sys/tipoEmpresas/listar">Tipo de empresas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                            aria-expanded="false">Documentos</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown07">
+                            <li><a class="dropdown-item" href="#">Documentos</a></li>
+                            <li><a class="dropdown-item" href="#">Supervisiones</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                            aria-expanded="false">Usuario</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown07">
+                            <li><a class="dropdown-item" href="#" routerLink="">Perfil de usuario</a></li>
+                            <li><a class="dropdown-item" href="#" routerLink="">Estadísticas</a></li>
+                            <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>

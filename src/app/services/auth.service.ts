@@ -39,6 +39,10 @@ export class AuthService {
     ));
   }
 
+  getUsuarios() {
+    return this.httpClient.get(`${this.AUTH_SERVER}/usuarios`);
+  }
+
   logout(): void {
     this.token = '';
     localStorage.removeItem("ACCESS_TOKEN");

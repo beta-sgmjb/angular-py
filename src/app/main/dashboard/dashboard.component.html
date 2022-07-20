@@ -8,6 +8,7 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
             </div>
+
             <!-- Content Row -->
             <div class="row">
                 <!-- Earnings (Monthly) Card Example -->
@@ -135,7 +136,7 @@
             <!-- Content Row -->
             <div class="row">
                 <!-- Content Column -->
-                <div class="col-lg-12 mb-4">
+                <div class="col-lg-6 mb-4">
 
                     <!-- Project Card Example -->
                     <div class="card shadow mb-4">
@@ -172,6 +173,35 @@
                                 <div class="progress-bar bg-success" role="progressbar" [style.width]="'100%'"
                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+
+                    <!-- Illustrations -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>
+                        </div>
+                        <div class="card-body">
+                            <ol class="list-group list-group-numbered">
+                                <li *ngFor="
+                                let data of dataset | paginate: { itemsPerPage: 5, currentPage: pages }" class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">{{ data[1].email }}</div>
+                                        {{ data[1].name }}
+                                    </div>
+                                    <span *ngIf="data[1].rol === 'estudiante'" class="badge text-light bg-success rounded-pill">
+                                        {{data[1].rol}}
+                                    </span>
+                                    <span *ngIf="data[1].rol === 'admin'" class="badge text-light bg-primary rounded-pill">
+                                        {{data[1].rol}}
+                                    </span>
+                                </li>                              
+                            </ol>
+                        </div>
+                        <div class="card-footer text-center">
+                            <pagination-controls (pageChange)="pages = $event"></pagination-controls>
                         </div>
                     </div>
                 </div>

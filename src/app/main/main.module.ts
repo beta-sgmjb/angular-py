@@ -6,8 +6,12 @@ import { MainRoutingModule } from './main-routing.module';
 import { AuthService } from '../services/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
-import { LoginComponent } from '../auth/login/login.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PppsModule } from './ppps/ppps.module';
+import { SupervisoresModule } from './supervisores/supervisores.module';
+import { TipoEmpresasModule } from './tipo-empresas/tipo-empresas.module';
+import { EmpresasModule } from './empresas/empresas.module';
 @NgModule({ 
   declarations: [DashboardComponent],
   imports: [
@@ -16,7 +20,13 @@ import { NgChartsModule } from 'ng2-charts';
     MainRoutingModule,
     HttpClientModule,
     EstudiantesModule,
-    NgChartsModule
+    NgChartsModule,
+    NgxPaginationModule,
+    EstudiantesModule,
+    PppsModule,
+    SupervisoresModule,
+    TipoEmpresasModule,
+    EmpresasModule
   ],
   providers: [AuthService]
 })

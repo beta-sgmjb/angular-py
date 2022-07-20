@@ -1,1 +1,78 @@
-<p>listar works!</p>
+<div class="text-warning container-fluid pt-3">
+    <div>
+        <div class="px-5 bg-info d-flex align-items-center py-4 row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-8">
+                        <h1 class="text-light">Estudiantes</h1>
+                        <div class="btn-group-horizontal">
+                            <button type="button" class="btn btn-dark mr-2">Ver estadísticas</button>
+                            <button type="button" class="btn btn-dark mr-2">Exportar</button>
+                            <a type="button" routerLink="/empresa/add" routerLinkActive="active"
+                                class="btn btn-dark">Nueva empresa</a>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex align-items-end align-self-end justify-content-end">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Escoger
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end ">
+                                        <li><button class="dropdown-item" type="button">Action</button></li>
+                                        <li><button class="dropdown-item" type="button">Another action</button></li>
+                                        <li><button class="dropdown-item" type="button">Something else here</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div>
+                                    <input type="email" class="form-control" id="exampleFormControlInput1"
+                                        placeholder="name@example.com">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">Nombre</th>
+                        <th scope="col" class="text-center">RUC</th>
+                        <th scope="col" class="text-center">Acceso a estudiante</th>
+                        <!-- <th scope="col" class="text-center">Acciones</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-center">asdawda</th>
+                        <td class="text-center">adasad</td>
+                        <td class="text-center">adwdasdasd</td>
+                        <td class="text-center">
+                            <i class="text-success fa fa-check-circle fa-2x"></i>
+                        </td>
+                        <td class="text-center">
+                            <i class="text-warning fa fa-lock fa-2x"></i>
+                        </td>
+<!--                         <td class="text-center">
+                            <div class="btn-group-horizontal">
+                                <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
+                                <button [routerLink]="['/empresa/edit', empresa.emp_id]" type="button"
+                                    class="btn btn-warning"><i class="fa fa-edit fa-2x"></i></button>
+                                <button (click)="deleteEmpresa(empresa.emp_id)" type="button" class="btn btn-danger"><i
+                                        class="fa fa-trash fa-2x"></i></button>
+                            </div>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

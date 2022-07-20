@@ -9,8 +9,6 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  usuario = {};
-
   constructor(private authService: AuthService, private router: Router) {
 
   }
@@ -36,7 +34,5 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  getUsuario() {
-    return this.usuario;
-  }
+
 }

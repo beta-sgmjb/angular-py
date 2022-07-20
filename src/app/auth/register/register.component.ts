@@ -13,12 +13,19 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.authService.getToken()) {
+      this.router.navigate(['sys/dashboard']).then(() => {
+        window.location.reload();
+      });
+    }
   }
 
   registrar(form: any): void {
     form.value.rol = "estudiante";
     this.authService.register(form.value).subscribe(res => {
-      this.router.navigateByUrl('/dashboard');
+      this.router.navigateByUrl('/sys/dashboard').then(() => {
+        window.location.reload();
+      });
     })
   }
 }

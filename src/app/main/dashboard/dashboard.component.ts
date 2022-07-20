@@ -8,13 +8,26 @@ import { ChartData, ChartOptions } from 'chart.js';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  usuarios: any = {};
   usuario: Object | any = {};
   rol: string | any = "";
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService) {}
+
+  pages: number = 1;
+  dataset: any[] = [];
+
   ngOnInit(): void {
     this.usuario = this.auth.getTokenD(this.auth.getToken())
     this.rol = this.usuario['rol'];
     console.log(this.rol);
+
+    /* traer usuarios */
+    this.auth.getUsuarios().subscribe(data => {
+      this.usuarios = data;
+      this.dataset = Object.entries(this.usuarios);
+      console.log(this.dataset);
+    });
+
   }
 
   salesData: ChartData<'doughnut'> = {
@@ -99,4 +112,8 @@ export class DashboardComponent implements OnInit {
       },
     },
   };
+
+  getUsuario() {
+
+  }
 }
