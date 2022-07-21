@@ -18,17 +18,14 @@ export class DashboardComponent implements OnInit {
   dataset: any[] = [];
 
   ngOnInit(): void {
-    console.log(this.authService.getToken());
-    this.usuario = this.authService.getTokenD();
-    this.rol = this.usuario['rol'];
+    this.usuario = JSON.parse(this.authService.getTokenD()).usuario;
+    this.rol = this.usuario.rol
     console.log(this.rol);
     
-
     /* traer usuarios */
     this.usuarioService.GetUsuarios().subscribe(data => {
       this.usuarios = data;
       this.dataset = Object.entries(this.usuarios);
-      console.log(this.dataset);
     });
   }
 

@@ -24,7 +24,20 @@ export class LoginComponent implements OnInit {
     });
   }
   ngOnInit() {}
+  
   loginUser() {
-    this.authService.signIn(this.signinForm.value);
+    this.authService.signIn(this.signinForm.value).subscribe(res => {
+      console.log(res);
+      
+      this.authService.saveToken(res.dataUsuario.token);
+      this.router.navigate(['sys/dashboard'])
+      .then(() => {
+        window.location.reload();
+      });
+    }, err => {
+      console.log(err.error.msg);
+      this.alertError = true;
+      this.error = err.error.msg;
+    });
   }
 }

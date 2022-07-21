@@ -15,29 +15,24 @@ export class AuthService {
   endpoint: string = 'http://localhost:4000/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
+  error = "";
 
   constructor(private http: HttpClient, public router: Router) { }
 
   // Sign-up
-  signUp(user: Usuario): Observable<any> {
+  signUp(user: Usuario) {
     let api = `${this.endpoint}/register`;
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+    return this.http.post<any>(api, user).pipe();
   }
 
   // Sign-in
   signIn(user: Usuario) {
     return this.http
-      .post<any>(`${this.endpoint}/login`, user)
-      .subscribe((res: any) => {
-        localStorage.setItem('access_token', res.dataUsuario.token);
-        this.currentUser = res;
-        this.router.navigate(['sys/dashboard']);
-        /* this.getUserProfile(res.id).subscribe((res) => {
-          this.currentUser = res;
-          this.router.navigate(['perfil/' + res.id]);
-          this.router.navigate(['sys/dashboard']);
-        }); */
-      });
+      .post<any>(`${this.endpoint}/login`, user).pipe();
+  }
+
+  saveToken(token: string) {
+    localStorage.setItem('access_token', token);
   }
 
   getToken(): any {

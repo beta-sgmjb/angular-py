@@ -3,5 +3,5 @@ export interface Usuario {
     name: string;
     email: string;
     password: string;
-    rol: string
+    rol: string;
 }

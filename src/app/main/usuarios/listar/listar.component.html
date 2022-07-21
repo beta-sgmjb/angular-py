@@ -48,7 +48,7 @@
                         <td class="text-center" *ngIf="data[1].rol === 'estudiante'"><i class="fa fa-user fa-2x text-primary"></i></td>
                         <td class="text-center" *ngIf="data[1].rol === 'admin'"><i class="fa fa-user-secret fa-2x text-dark"></i></td>
                         <td class="text-center">
-                            <div class="btn-group">
+                            <div class="btn-group" *ngIf="data[1].rol === 'estudiante'">
                                 <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
                                 <button type="button" class="btn btn-warning"><i class="fa fa-edit fa-2x"></i></button>
                                 <button type="button" class="btn btn-danger"><i class="fa fa-trash fa-2x"></i></button>
@@ -61,7 +61,6 @@
         </div>
         <div class="row text-dark d-flex justify-content-center">
             <pagination-controls (pageChange)="pages = $event"></pagination-controls>
-
         </div>
     </div>
 </div>

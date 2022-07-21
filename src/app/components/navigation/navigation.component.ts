@@ -13,8 +13,9 @@ export class NavigationComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.usuario = JSON.parse(this.authService.getTokenD());
-    
+    this.usuario = JSON.parse(this.authService.getTokenD()).usuario;
+    this.rol = this.usuario.rol
+    console.log(this.rol);
   }
 
   logout() {

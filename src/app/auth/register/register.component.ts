@@ -21,8 +21,8 @@ export class RegisterComponent implements OnInit {
     this.signupForm = this.fb.group({
       name: [''],
       email: [''],
-      mobile: [''],
       password: [''],
+      rol: ['admin'],
       passwordA: ['']
     });
   }
@@ -30,11 +30,18 @@ export class RegisterComponent implements OnInit {
   
   registerUser() {
     if (this.signupForm.value.passwordA === "admin123456") {
-      this.authService.signUp(this.signupForm.value).subscribe((res) => {
-        if (res.result) {
-          this.signupForm.reset();
-          this.router.navigate(['sys/dashboard']);
-        }
+      this.authService.signUp(this.signupForm.value).subscribe(res => {
+        console.log(res.dataUsuario.token);
+        this.authService.saveToken(res.dataUsuario.token);
+        this.signupForm.reset();
+        this.router.navigate(['sys/dashboard'])
+        .then(() => {
+          window.location.reload();
+        });
+      }, err => {
+        console.log(err.error.msg);
+        this.alertError = true;
+        this.error = err.error.msg;
       });
     } else {
       this.alertError = true;
