@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MainRoutingModule } from './main-routing.module';
 import { AuthService } from '../services/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -13,6 +13,7 @@ import { SupervisoresModule } from './supervisores/supervisores.module';
 import { TipoEmpresasModule } from './tipo-empresas/tipo-empresas.module';
 import { EmpresasModule } from './empresas/empresas.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { AuthInterceptor } from '../services/auth-interceptor.service';
 @NgModule({ 
   declarations: [DashboardComponent],
   imports: [
@@ -30,6 +31,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
     EmpresasModule,
     UsuariosModule
   ],
-  providers: [AuthService]
+  providers: [AuthService
+  ]
 })
 export class MainModule { }

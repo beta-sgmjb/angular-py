@@ -1,4 +1,4 @@
-<div class="text-warning container-fluid pt-3">
+<div class="text-dark container-fluid pt-3">
     <div>
         <div class="px-5 bg-info d-flex align-items-center py-4 row">
             <div class="col">
@@ -8,8 +8,7 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary">Ver estadísticas</button>
                             <button type="button" class="btn btn-warning">Exportar</button>
-                            <a type="button"
-                                class="btn btn-success" routerLink="../crear">Nueva empresa</a>
+                            <a type="button" class="btn btn-success" (click)="openFormModal()">Nuevo estudiante</a>
                         </div>
                     </div>
                     <div class="col-8 d-flex align-items-end justify-content-end">
@@ -18,10 +17,6 @@
                                 <!-- busqeudas -->
                             </div>
                             <div class="col-8">
-                                <div>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1"
-                                        placeholder="name@example.com">
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -32,36 +27,157 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="text-center">Nombre</th>
-                        <th scope="col" class="text-center">RUC</th>
-                        <th scope="col" class="text-center">Acceso a estudiante</th>
-                        <!-- <th scope="col" class="text-center">Acciones</th> -->
+                        <th scope="col" class="text-center">Código</th>
+                        <th scope="col" class="text-center">Nombres</th>
+                        <th scope="col" class="text-center">Ciclo</th>
+                        <th scope="col" class="text-center">Carrera Profesional</th>
+                        <th scope="col" class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" class="text-center">asdawda</th>
-                        <td class="text-center">adasad</td>
-                        <td class="text-center">adwdasdasd</td>
-                        <td class="text-center">
-                            <i class="text-success fa fa-check-circle fa-2x"></i>
+                    <tr *ngFor="let data of estudiantes | paginate: { itemsPerPage: 5, currentPage: pages }">
+                        <th scope="row" class="text-center">{{ data[1].id }}</th>
+                        <td class="text-center">{{ data[1].nombres }} {{ data[1].apellidoP }} {{ data[1].apellidoM }}
                         </td>
+                        <td class="text-center">{{ data[0].ciclo }}</td>
+                        <td class="text-center">{{ data[0].carreraProfesional }}</td>
                         <td class="text-center">
-                            <i class="text-warning fa fa-lock fa-2x"></i>
-                        </td>
-<!--                         <td class="text-center">
-                            <div class="btn-group-horizontal">
+                            <div class="btn-group">
                                 <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
-                                <button [routerLink]="['/empresa/edit', empresa.emp_id]" type="button"
-                                    class="btn btn-warning"><i class="fa fa-edit fa-2x"></i></button>
-                                <button (click)="deleteEmpresa(empresa.emp_id)" type="button" class="btn btn-danger"><i
+                                <button type="button" class="btn btn-warning" (click)="updateEvent(data[0].id)"><i
+                                        class="fa fa-edit fa-2x"></i></button>
+                                <button type="button" class="btn btn-danger" (click)="deleteEstudiante(data)"><i
                                         class="fa fa-trash fa-2x"></i></button>
                             </div>
-                        </td> -->
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="row text-dark d-flex justify-content-center">
+            <pagination-controls (pageChange)="pages = $event"></pagination-controls>
+        </div>
+    </div>
+    <!--form modal-->
+    <div class="modal fade text-dark" id="myModal2" tabindex="-1" aria-labelledby="exampleModalLabell" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable text-dark">
+            <div class="modal-content text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="myModal2">Crear estudiante</h5>
+                </div>
+                <div class="modal-body text-dark">
+                    <form [formGroup]="updateIssueForm" (ngSubmit)="submitForm()">
+
+                        <!-- Estudiante -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Ciclo</label>
+                            <input type="number" formControlName="ciclo" placeholder="Ciclo"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Carrera Profesional</label>
+                            <input type="text" formControlName="carreraProfesional" placeholder="Carrera Profesional"
+                                class="form-control form-control-lg" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-dark">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="submitForm()">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--form modal-->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear estudiante</h5>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="estudianteForm" (ngSubmit)="saveForm()">
+
+                        <!-- Usuario -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Usuario</label>
+                            <input type="text" formControlName="name" placeholder="Usuario"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Email</label>
+                            <input type="email" formControlName="email" placeholder="Email"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Password</label>
+                            <input type="password" formControlName="password" placeholder="Password"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <!-- Persona -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Nombres</label>
+                            <input type="name" formControlName="nombres" placeholder="Nombres"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Apellido Paterno</label>
+                            <input type="text" formControlName="apellidoP" placeholder="Apellido Paterno"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Apellido Materno</label>
+                            <input type="text" formControlName="apellidoM" placeholder="Apellido Materno"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Edad</label>
+                            <input type="number" formControlName="edad" placeholder="Edad"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" formControlName="fechaNacimiento" placeholder="Fecha de Nacimiento"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <!-- Estudiante -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Ciclo</label>
+                            <input type="number" formControlName="ciclo" placeholder="Ciclo"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Carrera Profesional</label>
+                            <input type="text" formControlName="carreraProfesional" placeholder="Carrera Profesional"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="saveForm()">
+                        Save changes
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

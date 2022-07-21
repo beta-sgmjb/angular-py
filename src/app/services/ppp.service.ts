@@ -2,12 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { Persona } from '../models/persona';
+import { Ppp } from '../models/ppp';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersonaService {
+export class PppService {
 
   AUTH_SERVER: string = 'http://localhost:4000/api';
   /*   authSubject = new BehaviorSubject(false); */
@@ -19,41 +19,41 @@ export class PersonaService {
     }),
   };
   // POST
-  CreatePersona(data: any): Observable<Persona> {
+  CreatePpp(data: any): Observable<Ppp> {
     return this.http
-      .post<Persona>(
-        this.AUTH_SERVER + '/personas/',
+      .post<Ppp>(
+        this.AUTH_SERVER + '/ppps/',
         JSON.stringify(data),
         this.httpOptions
       )
       .pipe(retry(1), catchError(this.errorHandl));
   }
   // GET
-  GetPersona(id: any): Observable<Persona> {
+  GetPpp(id: any): Observable<Ppp> {
     return this.http
-      .get<Persona>(this.AUTH_SERVER + '/personas/' + id)
-      .pipe(retry(1), catchError(this.errorHandl));
+      .get<Ppp>(this.AUTH_SERVER + '/ppps/' + id)
+      .pipe();
   }
   // GET
-  GetPersonas(): Observable<Persona> {
+  GetPpps(): Observable<Ppp> {
     return this.http
-      .get<Persona>(this.AUTH_SERVER + '/personas/')
+      .get<Ppp>(this.AUTH_SERVER + '/ppps/')
       .pipe(retry(1));
   }
   // PUT
-  UpdatePersona(id: any, data: any): Observable<Persona> {
+  UpdatePpp(id: any, data: any): Observable<Ppp> {
     return this.http
-      .put<Persona>(
-        this.AUTH_SERVER + '/personas/' + id,
+      .put<Ppp>(
+        this.AUTH_SERVER + '/ppps/' + id,
         JSON.stringify(data),
         this.httpOptions
       )
       .pipe();
   }
   // DELETE 
-  DeletePersona(id: any) {
+  DeletePpp(id: any) {
     return this.http
-      .delete<Persona>(this.AUTH_SERVER + '/personas/' + id, this.httpOptions)
+      .delete<Ppp>(this.AUTH_SERVER + '/ppps/' + id, this.httpOptions)
       .pipe(retry(1), catchError(this.errorHandl));
   }
   // Error handling

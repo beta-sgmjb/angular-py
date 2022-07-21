@@ -1,1 +1,198 @@
-<p>listar works!</p>
+<div>
+    <div class="text-warning container-fluid pt-3">
+        <div>
+            <div class="px-5 bg-info d-flex align-items-center py-4 row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">
+                            <h1 class="text-light">PPP</h1>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Ver estadísticas</button>
+                                <button type="button" class="btn btn-warning">Exportar</button>
+                                <a *ngIf="rol === 'admin'" type="button" class="btn btn-success"
+                                    (click)="openFormModal()">Nueva PPP</a>
+                            </div>
+                        </div>
+                        <div class="col-8 d-flex align-items-end justify-content-end">
+                            <div class="row">
+                                <div class="col-4">
+                                    <!-- busqeudas -->
+                                </div>
+                                <div class="col-8">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Código</th>
+                            <th scope="col" class="text-center">Nombre</th>
+                            <th scope="col" class="text-center">Carta de presentación</th>
+                            <th scope="col" class="text-center">Carta de aceptación</th>
+                            <th scope="col" class="text-center">Convenio PPP</th>
+                            <th scope="col" class="text-center">Plan PPP</th>
+                            <th scope="col" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of ppps | paginate: { itemsPerPage: 5, currentPage: pages }">
+                            <th scope="row" class="text-center">{{ data[0].id }}</th>
+                            <td class="text-center">{{ data[0].nombre }}</td>
+                            <td class="text-center" *ngIf="data[0].cartaPresentacion === null"><i
+                                    class="text-danger fa fa-2x fa-file-text-o"></i></td>
+                            <td class="text-center" *ngIf="data[0].cartaPresentacion ==! null">{{
+                                data[0].cartaPresentacion }}</td>
+                            <td class="text-center" *ngIf="data[0].cartaAceptacion === null"><i
+                                    class="text-danger fa fa-2x fa-file-text-o"></i></td>
+                            <td class="text-center" *ngIf="data[0].cartaAceptacion ==! null">{{ data[0].cartaAceptacion
+                                }}</td>
+                            <td class="text-center" *ngIf="data[0].convenioPPP === null"><i
+                                    class="text-danger fa fa-2x fa-file-text-o"></i></td>
+                            <td class="text-center" *ngIf="data[0].convenioPPP ==! null">{{ data[0].convenioPPP }}</td>
+                            <td class="text-center" *ngIf="data[0].planPPP === null"><i
+                                    class="text-danger fa fa-2x fa-file-text-o"></i></td>
+                            <td class="text-center" *ngIf="data[0].planPPP ==! null">{{ data[0].planPPP }}</td>
+                            <td class="text-center">
+                                <div class="btn-group" *ngIf="rol === 'admin'">
+                                    <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
+                                    <button type="button" class="btn btn-warning"><i
+                                            class="fa fa-edit fa-2x"></i></button>
+                                    <button type="button" class="btn btn-danger"><i
+                                            class="fa fa-trash fa-2x"></i></button>
+                                </div>
+                                <div class="" *ngIf="rol === 'estudiante'">
+                                    <button (click)="updateEvent(data[0].id)" type="button" class="btn btn-success"><i
+                                            class="fa fa-file fa-1x"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row text-dark d-flex justify-content-center">
+                <pagination-controls (pageChange)="pages = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+    <!--form modal-->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear estudiante</h5>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="pppForm" (ngSubmit)="saveForm()">
+                        <!-- Usuario -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" formControlName="nombre" placeholder="Nombre"
+                                class="form-control form-control-lg" required />
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Selecciona un estudiante</label>
+                            <select class="custom-select" required formControlName="idEstudiante">
+                                <option *ngFor="let data of estudiantes; index as i" value="{{data[0].id}}">
+                                    {{data[1].nombres}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Carta de Presentación</label>
+                            <input type="text" formControlName="cartaPresentacion" placeholder="Carta de Presentación"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <!-- Persona -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Carta de Aceptacion</label>
+                            <input type="name" formControlName="cartaAceptacion" placeholder="Carta de Aceptacion"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Convenio de PPP</label>
+                            <input type="text" formControlName="convenioPPP" placeholder="Convenio de PPP"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Plan de PPP</label>
+                            <input type="text" formControlName="planPPP" placeholder="Plan de PPP"
+                                class="form-control form-control-lg" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="saveForm()">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--form modal-->
+    <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar documentos</h5>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="upForm" (ngSubmit)="updateForm()">
+                        <!-- Usuario -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" formControlName="nombre" placeholder="Nombre"
+                                class="form-control form-control-lg" required />
+                        </div>
+
+                        <div class="form-outline mb-2">
+                            <div class="form-outline mb-2">
+                                <label class="form-label">Carta de Presentación</label>
+                                <input type="file" formControlName="cartaPresentacion"
+                                    placeholder="Carta de Presentación" class="form-control form-control-lg" required />
+                            </div>
+
+                            <!-- Persona -->
+                            <div class="form-outline mb-2">
+                                <label class="form-label">Carta de Aceptacion</label>
+                                <input type="name" formControlName="cartaAceptacion" placeholder="Carta de Aceptacion"
+                                    class="form-control form-control-lg" required />
+                            </div>
+
+                            <div class="form-outline mb-2">
+                                <label class="form-label">Convenio de PPP</label>
+                                <input type="text" formControlName="convenioPPP" placeholder="Convenio de PPP"
+                                    class="form-control form-control-lg" required />
+                            </div>
+
+                            <div class="form-outline mb-2">
+                                <label class="form-label">Plan de PPP</label>
+                                <input type="text" formControlName="planPPP" placeholder="Plan de PPP"
+                                    class="form-control form-control-lg" required />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="updateForm()">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

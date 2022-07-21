@@ -8,8 +8,7 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary">Ver estadísticas</button>
                             <button type="button" class="btn btn-warning">Exportar</button>
-                            <a type="button" routerLink="/empresa/add" routerLinkActive="active"
-                                class="btn btn-success">Nueva empresa</a>
+                            <a type="button" (click)="openFormModal()" class="btn btn-success">Nuevo usuario</a>
                         </div>
                     </div>
                     <div class="col-8 d-flex align-items-end justify-content-end">
@@ -41,18 +40,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of dataset | paginate: { itemsPerPage: 5, currentPage: pages }">
+                    <tr *ngFor="let data of usuarios | paginate: { itemsPerPage: 5, currentPage: pages }">
                         <th scope="row" class="text-center">{{ data[1].id }}</th>
                         <td class="text-center">{{ data[1].name }}</td>
                         <td class="text-center">{{ data[1].email }}</td>
-                        <td class="text-center" *ngIf="data[1].rol === 'estudiante'"><i class="fa fa-user fa-2x text-primary"></i></td>
-                        <td class="text-center" *ngIf="data[1].rol === 'admin'"><i class="fa fa-user-secret fa-2x text-dark"></i></td>
+                        <td class="text-center" *ngIf="data[1].rol === 'estudiante'"><i
+                                class="fa fa-user fa-2x text-primary"></i></td>
+                        <td class="text-center" *ngIf="data[1].rol === 'admin'"><i
+                                class="fa fa-user-secret fa-2x text-dark"></i></td>
                         <td class="text-center">
                             <div class="btn-group" *ngIf="data[1].rol === 'estudiante'">
                                 <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
                                 <button type="button" class="btn btn-warning"><i class="fa fa-edit fa-2x"></i></button>
                                 <button type="button" class="btn btn-danger"><i class="fa fa-trash fa-2x"></i></button>
-                                <button type="button" class="btn btn-success"><i class="fa fa-id-card fa-2x"></i></button>
+                                <button type="button" class="btn btn-success"><i
+                                        class="fa fa-id-card fa-2x"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -61,6 +63,28 @@
         </div>
         <div class="row text-dark d-flex justify-content-center">
             <pagination-controls (pageChange)="pages = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!--form modal-->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear usuario</h5>
+            </div>
+            <div class="modal-body">
+                <h3>Hello!</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="saveForm()">
+                    Save changes
+                </button>
+            </div>
         </div>
     </div>
 </div>

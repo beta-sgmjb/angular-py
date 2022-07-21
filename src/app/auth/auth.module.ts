@@ -14,8 +14,7 @@ import { AuthService } from '../services/auth.service';
     FormsModule,
     AuthRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule
+    ReactiveFormsModule
   ],
   providers: [AuthService]
 })
