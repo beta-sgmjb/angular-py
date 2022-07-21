@@ -12,6 +12,7 @@ import { PppsModule } from './ppps/ppps.module';
 import { SupervisoresModule } from './supervisores/supervisores.module';
 import { TipoEmpresasModule } from './tipo-empresas/tipo-empresas.module';
 import { EmpresasModule } from './empresas/empresas.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
 @NgModule({ 
   declarations: [DashboardComponent],
   imports: [
@@ -26,7 +27,8 @@ import { EmpresasModule } from './empresas/empresas.module';
     PppsModule,
     SupervisoresModule,
     TipoEmpresasModule,
-    EmpresasModule
+    EmpresasModule,
+    UsuariosModule
   ],
   providers: [AuthService]
 })

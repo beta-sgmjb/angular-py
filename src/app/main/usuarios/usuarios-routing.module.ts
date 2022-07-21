@@ -4,16 +4,14 @@ import { AuthGuard } from 'src/app/ojo.guard';
 import { ListarComponent } from './listar/listar.component';
 
 const routes: Routes = [
-  {
-    path: '', children: [
-      { path: 'listar', canActivate: [AuthGuard], component: ListarComponent },
-      { path: '**', redirectTo: 'listar' }
-    ]
-  }
+  { path: '', children: [
+    { path: 'listar', canActivate: [AuthGuard], component: ListarComponent },
+    { path: '**', redirectTo: 'listar' }
+  ] }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EmpresasRoutingModule { }
+export class UsuariosRoutingModule { }

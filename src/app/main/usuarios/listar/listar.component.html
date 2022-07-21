@@ -4,18 +4,18 @@
             <div class="col">
                 <div class="row">
                     <div class="col-4">
-                        <h1 class="text-light">Estudiantes</h1>
+                        <h1 class="text-light">Usuarios</h1>
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary">Ver estadísticas</button>
                             <button type="button" class="btn btn-warning">Exportar</button>
-                            <a type="button"
-                                class="btn btn-success" routerLink="../crear">Nueva empresa</a>
+                            <a type="button" routerLink="/empresa/add" routerLinkActive="active"
+                                class="btn btn-success">Nueva empresa</a>
                         </div>
                     </div>
                     <div class="col-8 d-flex align-items-end justify-content-end">
                         <div class="row">
                             <div class="col-4">
-                                <!-- busqeudas -->
+
                             </div>
                             <div class="col-8">
                                 <div>
@@ -32,36 +32,36 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">Código</th>
                         <th scope="col" class="text-center">Nombre</th>
-                        <th scope="col" class="text-center">RUC</th>
-                        <th scope="col" class="text-center">Acceso a estudiante</th>
+                        <th scope="col" class="text-center">Email</th>
+                        <th scope="col" class="text-center">Rol</th>
+                        <th scope="col" class="text-center">Acciones</th>
                         <!-- <th scope="col" class="text-center">Acciones</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" class="text-center">asdawda</th>
-                        <td class="text-center">adasad</td>
-                        <td class="text-center">adwdasdasd</td>
+                    <tr *ngFor="let data of dataset | paginate: { itemsPerPage: 5, currentPage: pages }">
+                        <th scope="row" class="text-center">{{ data[1].id }}</th>
+                        <td class="text-center">{{ data[1].name }}</td>
+                        <td class="text-center">{{ data[1].email }}</td>
+                        <td class="text-center" *ngIf="data[1].rol === 'estudiante'"><i class="fa fa-user fa-2x text-primary"></i></td>
+                        <td class="text-center" *ngIf="data[1].rol === 'admin'"><i class="fa fa-user-secret fa-2x text-dark"></i></td>
                         <td class="text-center">
-                            <i class="text-success fa fa-check-circle fa-2x"></i>
-                        </td>
-                        <td class="text-center">
-                            <i class="text-warning fa fa-lock fa-2x"></i>
-                        </td>
-<!--                         <td class="text-center">
-                            <div class="btn-group-horizontal">
+                            <div class="btn-group">
                                 <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
-                                <button [routerLink]="['/empresa/edit', empresa.emp_id]" type="button"
-                                    class="btn btn-warning"><i class="fa fa-edit fa-2x"></i></button>
-                                <button (click)="deleteEmpresa(empresa.emp_id)" type="button" class="btn btn-danger"><i
-                                        class="fa fa-trash fa-2x"></i></button>
+                                <button type="button" class="btn btn-warning"><i class="fa fa-edit fa-2x"></i></button>
+                                <button type="button" class="btn btn-danger"><i class="fa fa-trash fa-2x"></i></button>
+                                <button type="button" class="btn btn-success"><i class="fa fa-id-card fa-2x"></i></button>
                             </div>
-                        </td> -->
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="row text-dark d-flex justify-content-center">
+            <pagination-controls (pageChange)="pages = $event"></pagination-controls>
+
         </div>
     </div>
 </div>

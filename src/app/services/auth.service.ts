@@ -1,68 +1,86 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario';
-import { JwtResponse } from '../models/jwt-response';
-import { Rol } from '../models/rol';
-import { tap } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
 
-  AUTH_SERVER: string = 'http://localhost:4000/api';
-  authSubject = new BehaviorSubject(false);
-  private token: string | null = '';
+  endpoint: string = 'http://localhost:4000/api';
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  currentUser = {};
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient, public router: Router) { }
 
-  register(usuario: Usuario): Observable<JwtResponse> {
-    return this.httpClient.post<JwtResponse>(`${this.AUTH_SERVER}/register`,
-    usuario).pipe(tap(
-      (res:JwtResponse) => {
-        if(res) {
-          //guardar token
-          this.saveToken(res.dataUsuario.accessToken, "7d");       
-        }
-      }
-    ));
+  // Sign-up
+  signUp(user: Usuario): Observable<any> {
+    let api = `${this.endpoint}/register`;
+    return this.http.post(api, user).pipe(catchError(this.handleError));
   }
 
-  login(usuario: Usuario): Observable<JwtResponse> {
-    return this.httpClient.post<JwtResponse>(`${this.AUTH_SERVER}/login`,
-    usuario).pipe(tap(
-      (res:JwtResponse) => {
-        if(res) {
-          //guardar token
-          this.saveToken(res.dataUsuario.accessToken, "7d");
-        }
-      }
-    ));
+  // Sign-in
+  signIn(user: Usuario) {
+    return this.http
+      .post<any>(`${this.endpoint}/login`, user)
+      .subscribe((res: any) => {
+        localStorage.setItem('access_token', res.dataUsuario.token);
+        this.currentUser = res;
+        this.router.navigate(['sys/dashboard']);
+        /* this.getUserProfile(res.id).subscribe((res) => {
+          this.currentUser = res;
+          this.router.navigate(['perfil/' + res.id]);
+          this.router.navigate(['sys/dashboard']);
+        }); */
+      });
   }
 
-  getUsuarios() {
-    return this.httpClient.get(`${this.AUTH_SERVER}/usuarios`);
+  getToken(): any {
+    return localStorage.getItem('access_token');
   }
 
-  logout(): void {
-    this.token = '';
-    localStorage.removeItem("ACCESS_TOKEN");
-    localStorage.removeItem("EXPIRES_IN");
+  getTokenD() {
+    return atob(this.getToken().split('.')[1])
   }
 
-  private saveToken(token: string, expiresIn: string): void {
-    localStorage.setItem("ACCESS_TOKEN", token);
-    localStorage.setItem("EXPIRES_IN", expiresIn);
-    this.token = token;
+  get isLoggedIn(): boolean {
+    let authToken = localStorage.getItem('access_token');
+    return authToken !== null ? true : false;
   }
 
-  getToken(): string | null {
-    if (!this.token) {
-      this.token = localStorage.getItem("ACCESS_TOKEN");
+  doLogout() {
+    let removeToken = localStorage.removeItem('access_token');
+    if (removeToken == null) {
+      this.router.navigate(['log-in']);
     }
-    return this.token;
   }
 
-  getTokenD(token: string | any ): object {
-    return JSON.parse(atob(token.split('.')[1])).usuario
+  // User profile
+  getUserProfile(id: any): Observable<any> {
+    let api = `${this.endpoint}/usuarios/${id}`;
+    return this.http.get(api, { headers: this.headers }).pipe(
+      map((res) => {
+        return res || {};
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  // Error
+  handleError(error: HttpErrorResponse) {
+    let msg = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      msg = error.error.message;
+    } else {
+      // server-side error
+      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(msg);
   }
 }

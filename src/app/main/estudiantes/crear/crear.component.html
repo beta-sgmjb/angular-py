@@ -1,0 +1,54 @@
+<div class="container mt-4">
+    <div class="row">
+        <!-- Form -->
+        <div class="col-md-12">
+            <h3 class="mb-2">Agregar estudiante</h3>
+            <form [formGroup]="issueFormUEP" (ngSubmit)="submitForm()" novalidate>
+                <div class="form-group">
+                    <label>name</label>
+                    <input type="text" formControlName="name" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>email</label>
+                    <input type="email" formControlName="email" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>password</label>
+                    <input type="password" formControlName="password" class="form-control" maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input type="text" formControlName="nombres" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>Apellido Paterno</label>
+                    <input type="text" formControlName="apellidoP" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>Apellido Materno</label>
+                    <input type="text" formControlName="apellidoM" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>edad</label>
+                    <input type="number" formControlName="edad" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>fecha de nacimiento</label>
+                    <input type="date" formControlName="fechaNacimiento" class="form-control" maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label>Ciclo</label>
+                    <input type="number" formControlName="ciclo" class="form-control" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>Carrera profesiona</label>
+                    <input type="text" formControlName="carreraProfesional" class="form-control" maxlength="20">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+        </div>
+    </div>
+</div>

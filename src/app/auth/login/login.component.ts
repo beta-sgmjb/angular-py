@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,30 +10,21 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {
-
-  }
-
-
-  ngOnInit(): void {
-    if(this.authService.getToken()) {
-      this.router.navigate(['sys/dashboard']).then(() => {
-        window.location.reload();
-      });
-    }
-  }
-
-  login(form: any): void {
-    this.authService.login(form.value).subscribe(res => {
-      console.log(res);
-      
-      this.router.navigate(['sys/dashboard']).then(() => {
-        window.location.reload();
-      });
-    }, err => {
-      console.log(err);
+  alertError = false;
+  error = "";
+  signinForm: FormGroup;
+  constructor(
+    public fb: FormBuilder,
+    public authService: AuthService,
+    public router: Router
+  ) {
+    this.signinForm = this.fb.group({
+      email: [''],
+      password: [''],
     });
   }
-
-
+  ngOnInit() {}
+  loginUser() {
+    this.authService.signIn(this.signinForm.value);
+  }
 }

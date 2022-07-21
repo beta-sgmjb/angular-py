@@ -10,16 +10,15 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavigationComponent implements OnInit {
   usuario: any | Object = {};
   rol = "";
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.usuario = this.auth.getTokenD(this.auth.getToken())
-    this.rol = this.usuario['rol'];
-    console.log(this.rol);
+    this.usuario = JSON.parse(this.authService.getTokenD());
+    
   }
 
   logout() {
-    this.auth.logout();
+    this.authService.doLogout();
     this.router.navigate(['auth/login']);
   }
 }

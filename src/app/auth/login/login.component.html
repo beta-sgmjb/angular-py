@@ -4,21 +4,25 @@
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-header bg-danger text-light" *ngIf="alertError" style="border-radius: 1rem;">
+                            {{error}}
+                        </div>
                         <div class="card-body p-5 text-center">
 
-                            <form #frmRegister="ngForm" (ngSubmit)="login(frmRegister)">
+                            <form  [formGroup]="signinForm"
+                            (ngSubmit)="loginUser()">
                                 <h3 class="mb-5">Login</h3>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label">Email</label>
-                                    <input type="email" name="email" placeholder="email" 
-                                    class="form-control form-control-lg" ngModel required/>
+                                    <input type="email" formControlName="email" placeholder="email" 
+                                    class="form-control form-control-lg" required/>
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label">Password</label>
-                                    <input type="password" placeholder="password" name="password"
-                                        class="form-control form-control-lg" ngModel required/>
+                                    <input type="password" placeholder="password" formControlName="password"
+                                        class="form-control form-control-lg" required/>
                                 </div>
                                 <div class="mb-4">
                                     <a routerLink="/auth/register">registrate...</a>

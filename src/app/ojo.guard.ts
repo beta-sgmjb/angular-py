@@ -1,30 +1,23 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, 
+UrlTree, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './services/auth.service';
-
 @Injectable({
   providedIn: 'root'
 })
-export class OjoGuard implements CanActivate {
-  constructor(private router: Router, private auth: AuthService) {}
-  authV = false;
-
-  redirect(flag: boolean): any {
-    if (!flag) {
-      this.router.navigate(['auth/login']).then(() => {
-        window.location.reload();
-      });
-    }
-  }
-
+export class AuthGuard implements CanActivate {
+  constructor(
+    public authService: AuthService,
+    public router: Router
+  ) { }
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if(this.auth.getToken()) {
-        this.authV = true;
-      }
-      this.redirect(this.authV);
-      return this.authV;
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.authService.isLoggedIn !== true) {
+      window.alert("Access not allowed!");
+      this.router.navigate(['log-in'])
+    }
+    return true;
   }
 }

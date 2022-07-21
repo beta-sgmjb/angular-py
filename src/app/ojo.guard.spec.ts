@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OjoGuard } from './ojo.guard';
+import { AuthGuard } from './ojo.guard';
 
 describe('OjoGuard', () => {
-  let guard: OjoGuard;
+  let guard: AuthGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(OjoGuard);
+    guard = TestBed.inject(AuthGuard);
   });
 
   it('should be created', () => {
