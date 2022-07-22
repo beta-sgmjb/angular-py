@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ref, uploadBytes } from '@firebase/storage';
 import { AuthService } from 'src/app/services/auth.service';
 import { EstudianteService } from 'src/app/services/estudiante.service';
 import { PersonaService } from 'src/app/services/persona.service';
@@ -28,7 +30,8 @@ export class ListarComponent implements OnInit {
     private estudianteService: EstudianteService,
     private personaService: PersonaService,
     private authService: AuthService,
-    private usuarioService: UsuarioService) {
+    private usuarioService: UsuarioService,
+    private storage: Storage) {
     this.pppForm = this.fb.group({
       nombre: [''],
       idEstudiante: [''],
@@ -40,6 +43,7 @@ export class ListarComponent implements OnInit {
     this.upForm = this.fb.group({
       id: [''],
       nombre: [''],
+      idEstudiante: [''],
       cartaPresentacion: [''],
       cartaAceptacion: [''],
       convenioPPP: [''],
@@ -92,6 +96,7 @@ export class ListarComponent implements OnInit {
 
     this.pppService.CreatePpp(this.ppp).subscribe((res) => {
       console.log('Se agregó el ppp!', res);
+      this.ppps = [];
       this.GetPpps();
       this.formModal.hide();
     });
@@ -129,6 +134,7 @@ export class ListarComponent implements OnInit {
     this.upForm = this.fb.group({
       id: [''],
       nombre: [''],
+      idEstudiante: [''],
       cartaPresentacion: [''],
       cartaAceptacion: [''],
       convenioPPP: [''],
@@ -140,10 +146,11 @@ export class ListarComponent implements OnInit {
   updateEvent(id: number) {
     this.openFormModal2();
     this.pppService.GetPpp(id).subscribe((data: {} | any) => {
-      console.log(data);
+/*       console.log(data); */
       this.upForm = this.fb.group({
         id: [data.id],
         nombre: [data.nombre],
+        idEstudiante: [data.idEstudiante],
         cartaPresentacion: [data.cartaPresentacion],
         cartaAceptacion: [data.cartaAceptacion],
         convenioPPP: [data.convenioPPP],
@@ -154,11 +161,25 @@ export class ListarComponent implements OnInit {
 
   updateForm() {
     console.log(this.upForm.value);
-    
     this.pppService.UpdatePpp(this.upForm.value.id, this.upForm.value).subscribe((data: {} | any) => {
       this.GetPpps();
       this.ppps = [];
       this.formModal2.hide();
+    })
+  }
+
+  uploadPdf($event : any) {
+    const file = $event.target.files[0];
+    console.log(file);
+    const pdfRef = ref(this.storage, `documentos/${this.upForm.value.idEstudiante}-${this.upForm.value.id}-${file.name}`);
+    /* this.upForm.value.cartaPresentacion = pdfRef.fullPath; */
+    /* console.log(this.upForm.value.cartaPresentacion); */
+    uploadBytes(pdfRef, file)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
     })
   }
 }

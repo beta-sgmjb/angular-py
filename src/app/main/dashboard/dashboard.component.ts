@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
       this.dataset = Object.entries(this.usuarios);
     });
   }
-
+  
   salesData: ChartData<'doughnut'> = {
     labels: [
       'Redes',

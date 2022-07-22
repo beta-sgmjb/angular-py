@@ -42,20 +42,20 @@
                         <tr *ngFor="let data of ppps | paginate: { itemsPerPage: 5, currentPage: pages }">
                             <th scope="row" class="text-center">{{ data[0].id }}</th>
                             <td class="text-center">{{ data[0].nombre }}</td>
-                            <td class="text-center" *ngIf="data[0].cartaPresentacion === null"><i
+                            <td class="text-center" *ngIf="data[0].cartaPresentacion == 'null'"><i
                                     class="text-danger fa fa-2x fa-file-text-o"></i></td>
-                            <td class="text-center" *ngIf="data[0].cartaPresentacion ==! null">{{
+                            <td class="text-center" *ngIf="data[0].cartaPresentacion != 'null'">{{
                                 data[0].cartaPresentacion }}</td>
-                            <td class="text-center" *ngIf="data[0].cartaAceptacion === null"><i
+                            <td class="text-center" *ngIf="data[0].cartaAceptacion == 'null'"><i
                                     class="text-danger fa fa-2x fa-file-text-o"></i></td>
-                            <td class="text-center" *ngIf="data[0].cartaAceptacion ==! null">{{ data[0].cartaAceptacion
+                            <td class="text-center" *ngIf="data[0].cartaAceptacion != 'null'">{{ data[0].cartaAceptacion
                                 }}</td>
-                            <td class="text-center" *ngIf="data[0].convenioPPP === null"><i
+                            <td class="text-center" *ngIf="data[0].convenioPPP == 'null'"><i
                                     class="text-danger fa fa-2x fa-file-text-o"></i></td>
-                            <td class="text-center" *ngIf="data[0].convenioPPP ==! null">{{ data[0].convenioPPP }}</td>
-                            <td class="text-center" *ngIf="data[0].planPPP === null"><i
+                            <td class="text-center" *ngIf="data[0].convenioPPP != 'null'">{{ data[0].convenioPPP }}</td>
+                            <td class="text-center" *ngIf="data[0].planPPP == 'null'"><i
                                     class="text-danger fa fa-2x fa-file-text-o"></i></td>
-                            <td class="text-center" *ngIf="data[0].planPPP ==! null">{{ data[0].planPPP }}</td>
+                            <td class="text-center" *ngIf="data[0].planPPP != 'null'">{{ data[0].planPPP }}</td>
                             <td class="text-center">
                                 <div class="btn-group" *ngIf="rol === 'admin'">
                                     <button type="button" class="btn btn-info"><i class="fa fa-eye fa-2x"></i></button>
@@ -159,26 +159,26 @@
                         <div class="form-outline mb-2">
                             <div class="form-outline mb-2">
                                 <label class="form-label">Carta de Presentación</label>
-                                <input type="file" formControlName="cartaPresentacion"
+                                <input type="file" formControlName="cartaPresentacion" (change)="uploadPdf($event)"
                                     placeholder="Carta de Presentación" class="form-control form-control-lg" required />
                             </div>
 
                             <!-- Persona -->
                             <div class="form-outline mb-2">
                                 <label class="form-label">Carta de Aceptacion</label>
-                                <input type="name" formControlName="cartaAceptacion" placeholder="Carta de Aceptacion"
+                                <input type="file" formControlName="cartaAceptacion" placeholder="Carta de Aceptacion"
                                     class="form-control form-control-lg" required />
                             </div>
 
                             <div class="form-outline mb-2">
                                 <label class="form-label">Convenio de PPP</label>
-                                <input type="text" formControlName="convenioPPP" placeholder="Convenio de PPP"
+                                <input type="file" formControlName="convenioPPP" placeholder="Convenio de PPP"
                                     class="form-control form-control-lg" required />
                             </div>
 
                             <div class="form-outline mb-2">
                                 <label class="form-label">Plan de PPP</label>
-                                <input type="text" formControlName="planPPP" placeholder="Plan de PPP"
+                                <input type="file" formControlName="planPPP" placeholder="Plan de PPP"
                                     class="form-control form-control-lg" required />
                             </div>
                         </div>

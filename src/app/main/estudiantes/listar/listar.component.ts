@@ -181,7 +181,7 @@ export class ListarComponent implements OnInit {
       console.log(res);
       
       this.GetEstudiantes();
-      this.formModal.hide();
+      this.formModal2.hide();
     })
   }
 }
